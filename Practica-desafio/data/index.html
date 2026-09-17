@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ESP32 REST API Demo</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f4f4f9; color: #333; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); max-width: 400px; }
+        button { background: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        pre { background: #eef; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>ESP32 Dashboard</h2>
+        <p>Presiona el botón para consultar la API REST:</p>
+        <button onclick="obtenerEstado()">Obtener Estado (GET /api/status)</button>
+        <h3>Respuesta JSON:</h3>
+        <pre id="json-output">Haga clic en el botón...</pre>
+    </div>
+
+    <script>
+        async function obtenerEstado() {
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+                document.getElementById('json-output').innerText = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('json-output').innerText = 'Error al consultar la API: ' + error;
+            }
+        }
+    </script>
+</body>
+</html>
